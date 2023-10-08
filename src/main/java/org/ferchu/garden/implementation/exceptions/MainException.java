@@ -7,7 +7,7 @@ public class MainException extends RuntimeException {
     private ErrorApp errorApp;
 
     public MainException(ErrorApp errorApp) {
-
+        super();
         this.errorApp = errorApp;
     }
 

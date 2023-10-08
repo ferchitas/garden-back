@@ -180,4 +180,5 @@ components:
       enum:
       - UNKNOWN_ERROR
       - OBJECT_NOT_EXISTING
+      - MISSING_FIELD
       default: UNKNOWN_ERROR

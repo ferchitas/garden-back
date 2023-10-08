@@ -1,20 +1,28 @@
 package org.ferchu.garden.implementation.services;
 
+import org.ferchu.garden.generated.model.ErrorType;
 import org.ferchu.garden.generated.model.Plant;
 import org.ferchu.garden.generated.model.PlantType;
 import org.ferchu.garden.implementation.dao.PlantDao;
 import org.ferchu.garden.implementation.dao.PlantTypeDao;
+import org.ferchu.garden.implementation.exceptions.MissingPlantTypeException;
+import org.ferchu.garden.implementation.exceptions.NotCreatedPlantTypeException;
+import org.ferchu.garden.implementation.exceptions.UnexistingObjectException;
+import org.ferchu.garden.implementation.exceptions.builder.ErrorAppBuilder;
 import org.ferchu.garden.implementation.mapper.PlantTypesMapperDaoToDto;
 import org.ferchu.garden.implementation.mapper.PlantTypesMapperDtoToDao;
 import org.ferchu.garden.implementation.mapper.PlantsMapperDaoToDto;
 import org.ferchu.garden.implementation.mapper.PlantsMapperDtoToDao;
 import org.ferchu.garden.implementation.repository.PlantTypesRepository;
 import org.ferchu.garden.implementation.repository.PlantsRepository;
+import org.ferchu.garden.implementation.utils.Constants;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class PlantTypesService implements PlantTypeServiceI {
@@ -68,8 +76,7 @@ public class PlantTypesService implements PlantTypeServiceI {
         PlantTypesMapperDaoToDto plantTypesMapperDaoToDto = Mappers.getMapper(PlantTypesMapperDaoToDto.class);
 
         List<PlantTypeDao> plantsTypesDao = (List<PlantTypeDao>) plantsTypesRepository.findAll();
-        List<PlantType> plants = plantTypesMapperDaoToDto.map(plantsTypesDao);
-        return plants;
+        return plantTypesMapperDaoToDto.map(plantsTypesDao);
     }
 
     @Override
@@ -77,11 +84,8 @@ public class PlantTypesService implements PlantTypeServiceI {
 
         PlantTypesMapperDtoToDao plantTypesMapperDtoToDao = Mappers.getMapper(PlantTypesMapperDtoToDao.class);
         PlantTypesMapperDaoToDto plantTypesMapperDaoToDto = Mappers.getMapper(PlantTypesMapperDaoToDto.class);
-
-        PlantTypeDao plantTypeDao =
-                (PlantTypeDao) plantsTypesRepository.save(plantTypesMapperDtoToDao.convert(plantType));
-        PlantType plantTypeSaved = plantTypesMapperDaoToDto.convert(plantTypeDao);
-        return plantTypeSaved;
+        PlantTypeDao plantTypeDao = (PlantTypeDao) plantsTypesRepository.save(plantTypesMapperDtoToDao.convert(plantType));
+        return plantTypesMapperDaoToDto.convert(plantTypeDao);
     }
 
     @Override
@@ -97,10 +101,22 @@ public class PlantTypesService implements PlantTypeServiceI {
 
         PlantTypesMapperDtoToDao plantTypesMapperDtoToDao = Mappers.getMapper(PlantTypesMapperDtoToDao.class);
         PlantTypesMapperDaoToDto plantTypesMapperDaoToDto = Mappers.getMapper(PlantTypesMapperDaoToDto.class);
+        PlantTypeDao plantTypeDao = null;
+        ErrorAppBuilder errorAppBuilder = new ErrorAppBuilder();
+        errorAppBuilder
+                .errorCode(BigDecimal.valueOf(1))
+                .httpCode(BigDecimal.valueOf(404))
+                .errorType(ErrorType.OBJECT_NOT_EXISTING);
 
-        PlantTypeDao plantTypeDao =
-                (PlantTypeDao) plantsTypesRepository.save(plantTypesMapperDtoToDao.convert(plantType));
-        PlantType plantTypeSaved = plantTypesMapperDaoToDto.convert(plantTypeDao);
-        return plantTypeSaved;
+        if(plantsTypesRepository.findById(plantType.getId().longValue()).isPresent()) {
+
+            plantTypeDao = (PlantTypeDao) plantsTypesRepository.save(plantTypesMapperDtoToDao.convert(plantType));
+        }
+        else {
+            errorAppBuilder.name(Constants.UNEXISTING_OBJECT_IN_DB_NAME_STR)
+                    .description(String.format(Constants.UNEXISTING_OBJECT_IN_DB_DESCRIPTION_STR, PlantTypeDao.class.getCanonicalName()));
+            throw new UnexistingObjectException(errorAppBuilder.build());
+        }
+        return plantTypesMapperDaoToDto.convert(plantTypeDao);
     }
 }

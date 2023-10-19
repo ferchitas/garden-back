@@ -1,0 +1,59 @@
+get:
+  operationId: getAllCares
+  description: Get all of the care if everything is right
+  responses:
+    '200':
+      description: Everything was right, so all of the cares are returned
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../model/care.yaml#/Care'
+post:
+  operationId: createCare
+  description: create a new care
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/care.yaml#/Care'
+  responses:
+    '200':
+      description: Everything was right, the care has been created
+      content:
+        application/json:
+          schema:
+            $ref: '../model/care.yaml#/Care'
+patch:
+  operationId: updateCare
+  description: update a care
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/care.yaml#/Care'
+  responses:
+    '200':
+      description: Everything was right, the care has been updated
+      content:
+        application/json:
+          schema:
+            $ref: '../model/care.yaml#/Care'
+    '404':
+      description: The care that you want to update doesn't exist.
+      content:
+        application/json:
+          schema:
+            $ref: '../garden-api.yaml#/components/schemas/ErrorApp'
+delete:
+  operationId: deleteCare
+  description: delete a care
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/care.yaml#/Care'
+  responses:
+    '200':
+      description: Everything was right, the care has been removed

@@ -1,0 +1,14 @@
+PlantType:
+  type: object
+  additionalProperties: false
+  required:
+    - name
+  properties:
+    id:
+      type: number
+      nullable: false
+      example: 123
+    name:
+      type: string
+      nullable: false
+      example: Fern

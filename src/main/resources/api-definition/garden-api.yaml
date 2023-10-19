@@ -1,0 +1,55 @@
+openapi: 3.0.3
+
+info:
+  title: Garden API
+  version: 0.0.1
+  description: >-
+    This is the api exposed to the garden application
+servers:
+  - url: http://localhost:8080
+    description: >-
+      For the moment this is the default url, in the future we will see where this is deployed
+paths:
+  /plant-type:
+    $ref: './api/plantTypeApi.yaml'
+  /plants:
+    $ref: './api/plantApi.yaml'
+  /care:
+    $ref: './api/careApi.yaml'
+  /care-type:
+    $ref: './api/careTypeApi.yaml'
+components:
+  schemas:
+    Care:
+      $ref: './model/care.yaml#/Care'
+    CareType:
+      $ref: './model/careType.yaml#/CareType'
+    Plant:
+      $ref: './model/plant.yaml#/Plant'
+    PlantType:
+      $ref: './model/plantType.yaml#/PlantType'
+    ErrorApp:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+        - errorCode
+        - httpCode
+        - errorType
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        errorCode:
+          type: number
+        httpCode:
+          type: number
+        errorType:
+          $ref: '#/components/schemas/ErrorType'
+    ErrorType:
+      enum:
+      - UNKNOWN_ERROR
+      - OBJECT_NOT_EXISTING
+      - MISSING_FIELD
+      default: UNKNOWN_ERROR

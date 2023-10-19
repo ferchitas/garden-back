@@ -1,0 +1,59 @@
+get:
+  operationId: getAllPlants
+  description: Get all of the plant if everything is right
+  responses:
+    '200':
+      description: Everything was right, so all of the plants are returned
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../model/plant.yaml#/Plant'
+post:
+  operationId: createPlant
+  description: create a new plant
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/plant.yaml#/Plant'
+  responses:
+    '200':
+      description: Everything was right, the plant has been created
+      content:
+        application/json:
+          schema:
+            $ref: '../model/plant.yaml#/Plant'
+patch:
+  operationId: updatePlant
+  description: update a plant
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/plant.yaml#/Plant'
+  responses:
+    '200':
+      description: Everything was right, the plant has been updated
+      content:
+        application/json:
+          schema:
+            $ref: '../model/plant.yaml#/Plant'
+    '404':
+      description: The plant that you want to update doesn't exist.
+      content:
+        application/json:
+          schema:
+            $ref: '../garden-api.yaml#/components/schemas/ErrorApp'
+delete:
+  operationId: deletePlant
+  description: delete a plant
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/plant.yaml#/Plant'
+  responses:
+    '200':
+      description: Everything was right, the plant has been removed

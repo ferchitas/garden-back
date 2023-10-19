@@ -1,0 +1,53 @@
+get:
+  operationId: getAllPlantTypes
+  description: Get all of the plant types if everything is right
+  responses:
+    '200':
+      description: Everything was right, so all of the plant types are returned
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../model/plantType.yaml#/PlantType'
+post:
+  operationId: createPlantType
+  description: create a new plant type
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/plantType.yaml#/PlantType'
+  responses:
+    '200':
+      description: Everything was right, the plant has been created
+      content:
+        application/json:
+          schema:
+            $ref: '../model/plantType.yaml#/PlantType'
+patch:
+  operationId: updatePlantType
+  description: update a plant type
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/plantType.yaml#/PlantType'
+  responses:
+    '200':
+      description: Everything was right, the plant type has been updated
+      content:
+        application/json:
+          schema:
+            $ref: '../model/plantType.yaml#/PlantType'
+delete:
+  operationId: deletePlantType
+  description: delete a plant type
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/plantType.yaml#/PlantType'
+  responses:
+    '200':
+      description: Everything was right, the plant type has been removed

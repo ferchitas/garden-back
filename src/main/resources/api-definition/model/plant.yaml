@@ -1,0 +1,17 @@
+Plant:
+  type: object
+  additionalProperties: false
+  required:
+    - id
+  properties:
+    id:
+      type: number
+      nullable: false
+      example: 123
+    name:
+      type: string
+      nullable: false
+      example: Fern 1
+    plantType:
+      $ref: './plantType.yaml#/PlantType'
+      nullable: false

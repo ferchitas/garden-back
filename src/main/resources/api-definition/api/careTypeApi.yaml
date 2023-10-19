@@ -1,0 +1,53 @@
+get:
+  operationId: getAllCareTypes
+  description: Get all of the care types if everything is right
+  responses:
+    '200':
+      description: Everything was right, so all of the care types are returned
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../model/careType.yaml#/CareType'
+post:
+  operationId: createCareType
+  description: create a new care type
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/careType.yaml#/CareType'
+  responses:
+    '200':
+      description: Everything was right, the care type has been created
+      content:
+        application/json:
+          schema:
+            $ref: '../model/careType.yaml#/CareType'
+patch:
+  operationId: updateCareType
+  description: update a care type
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/careType.yaml#/CareType'
+  responses:
+    '200':
+      description: Everything was right, the care type has been updated
+      content:
+        application/json:
+          schema:
+            $ref: '../model/careType.yaml#/CareType'
+delete:
+  operationId: deleteCareType
+  description: delete a care type
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../model/careType.yaml#/CareType'
+  responses:
+    '200':
+      description: Everything was right, the care type type has been removed

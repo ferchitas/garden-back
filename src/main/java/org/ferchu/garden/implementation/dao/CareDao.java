@@ -10,8 +10,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @Entity
-@Table(name="plant")
-public class PlantDao {
+@Table(name="care")
+public class CareDao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator="seq")
@@ -19,12 +19,4 @@ public class PlantDao {
     private Long id;
 
     private String name;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="id")
-    private PlantTypeDao plantTypeDao;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="id")
-    private CareDao careDao;
 }

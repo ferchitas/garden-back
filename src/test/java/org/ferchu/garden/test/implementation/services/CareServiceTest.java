@@ -3,6 +3,7 @@ package org.ferchu.garden.test.implementation.services;
 import org.ferchu.garden.generated.model.Care;
 import org.ferchu.garden.implementation.api.CareApiImpl;
 import org.ferchu.garden.implementation.dao.CareDao;
+import org.ferchu.garden.implementation.dao.CareTypeDao;
 import org.ferchu.garden.implementation.repository.CareRepository;
 import org.ferchu.garden.implementation.services.CareService;
 import org.junit.jupiter.api.Assertions;
@@ -14,6 +15,10 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
+import java.time.Duration;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +37,17 @@ public class CareServiceTest {
 
         careRepository = Mockito.mock(CareRepository.class);
         repositoryResult = new ArrayList<>();
-        repositoryResult.add(CareDao.builder().id(1L).name("name").build());
+        repositoryResult.add(
+                CareDao.builder()
+                        .id(1L)
+                        .applicationDate(ZonedDateTime.now())
+                        .applicationDurationRange(Duration.ofDays(1))
+                        .careTypeDao(
+                    CareTypeDao.builder()
+                            .name("name")
+                            .description("description")
+                            .build())
+                        .build());
         MockitoAnnotations.openMocks(this);
     }
 
@@ -45,6 +60,5 @@ public class CareServiceTest {
         Assertions.assertFalse(result.isEmpty());
         Care care = result.get(0);
         Assertions.assertNotNull(care.getId());
-        Assertions.assertNotNull(care.getName());
     }
 }

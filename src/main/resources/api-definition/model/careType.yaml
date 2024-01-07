@@ -12,3 +12,7 @@ CareType:
       type: string
       nullable: false
       example: Fern
+    description:
+      type: string
+      nullable: false
+      example: Fern

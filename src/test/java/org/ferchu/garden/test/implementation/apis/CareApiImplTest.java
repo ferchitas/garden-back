@@ -25,6 +25,5 @@ public class CareApiImplTest {
         Assertions.assertFalse(cares.isEmpty());
         Care care = cares.get(0);
         Assertions.assertNotNull(care.getId());
-        Assertions.assertNotNull(care.getName());
     }
 }

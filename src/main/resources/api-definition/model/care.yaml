@@ -8,7 +8,12 @@ Care:
       type: number
       nullable: false
       example: 123
-    name:
-      type: string
+    careType:
+      $ref: './careType.yaml#/CareType'
       nullable: false
-      example: Fern
+    applicationDate:
+      type: string
+      format: date-time
+    applicationDuration:
+      type: string
+      format: duration

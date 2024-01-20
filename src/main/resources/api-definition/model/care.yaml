@@ -15,5 +15,6 @@ Care:
       type: string
       format: date-time
     applicationDuration:
-      type: string
-      format: duration
+      type: integer
+      format: int64
+      description: Number of seconds until the care is expired
